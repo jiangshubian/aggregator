@@ -1,7 +1,7 @@
 package com.shu;
 
 
-import org.testng.annotations.Test;
+import org.junit.Test;
 
 /**
  * @author: jiangshubian
