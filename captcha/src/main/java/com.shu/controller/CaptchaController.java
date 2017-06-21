@@ -2,6 +2,7 @@ package com.shu.controller;
 
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
+import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -99,7 +100,7 @@ public class CaptchaController {
             if (randCode.toLowerCase().equals(code.toLowerCase())) status = "1";
             map.put("status", status);
             map.put("description", "");
-            String data = ""; //JSONObject.fromObject(map).toString();
+            String data = JSONObject.fromObject(map).toString();
             logger.info("返回给页面的数据为: " + data);
             response.getWriter().print(data);
             response.getWriter().flush();

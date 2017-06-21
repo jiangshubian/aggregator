@@ -9,7 +9,6 @@
     <version>1.0-SNAPSHOT</version>
 
     <artifactId>model-parent</artifactId>
-
     <properties>
         <springframework.version>4.2.9.RELEASE</springframework.version>
         <kaptcha.version>2.3.2</kaptcha.version>
@@ -99,6 +98,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!-- spring 相关包 start-->
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-core</artifactId>
@@ -134,12 +134,14 @@
                 <artifactId>spring-web</artifactId>
                 <version>${springframework.version}</version>
             </dependency>
+            <!-- spring 相关包 end-->
+            <!-- google的kaptcha包 验证码封装jar -->
             <dependency>
                 <groupId>com.google.code.kaptcha.custom</groupId>
                 <artifactId>kaptcha</artifactId>
                 <version>${kaptcha.version}</version>
             </dependency>
-            <!-- slf4j -->
+            <!-- slf4j log -->
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
@@ -150,7 +152,7 @@
                 <artifactId>slf4j-log4j12</artifactId>
                 <version>${slf4j.version}</version>
             </dependency>
-            <!-- log end -->
+            <!-- slf4j log end -->
             <!-- https://mvnrepository.com/artifact/javax.servlet/servlet-api -->
             <dependency>
                 <groupId>javax.servlet</groupId>
@@ -158,35 +160,24 @@
                 <version>2.5</version>
                 <scope>system</scope>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/net.sf.json-lib/json-lib  JSON系列 -->
+            <!-- https://mvnrepository.com/artifact/net.sf.json-lib/json-lib
+            json-lib自动导入依赖包
+            commons-lang-2.5.jar commons-beanutils-1.9.2.jar commons-collections-3.2.1.jar
+            commons-logging-1.2.jar
+            -->
             <dependency>
                 <groupId>net.sf.json-lib</groupId>
                 <artifactId>json-lib</artifactId>
                 <version>2.4</version>
                 <classifier>jdk15</classifier>
             </dependency>
-            <!-- json-lib还需要以下依赖包 -->
+            <!-- 阿里巴巴开源JSON包，不依赖其它jar包 -->
             <dependency>
-                <groupId>commons-lang</groupId>
-                <artifactId>commons-lang</artifactId>
-                <version>2.5</version>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>1.2.7</version>
             </dependency>
-            <dependency>
-                <groupId>commons-beanutils</groupId>
-                <artifactId>commons-beanutils</artifactId>
-                <version>1.9.2</version>
-            </dependency>
-            <dependency>
-                <groupId>commons-collections</groupId>
-                <artifactId>commons-collections</artifactId>
-                <version>3.2.1</version>
-            </dependency>
-            <dependency>
-                <groupId>commons-logging</groupId>
-                <artifactId>commons-logging</artifactId>
-                <version>1.2</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/net.sf.json-lib/json-lib  JSON系列 -->
         </dependencies>
     </dependencyManagement>
+
 </project>
