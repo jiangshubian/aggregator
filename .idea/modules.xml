@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/aggregator.iml" filepath="$PROJECT_DIR$/aggregator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/captcha/captcha.iml" filepath="$PROJECT_DIR$/captcha/captcha.iml" />
+      <module fileurl="file://$PROJECT_DIR$/email/email.iml" filepath="$PROJECT_DIR$/email/email.iml" />
+      <module fileurl="file://$PROJECT_DIR$/model-parent/model-parent.iml" filepath="$PROJECT_DIR$/model-parent/model-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/persist/persist.iml" filepath="$PROJECT_DIR$/persist/persist.iml" />
+    </modules>
+  </component>
+</project>
