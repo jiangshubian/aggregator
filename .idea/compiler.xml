@@ -24,14 +24,16 @@
         <processorPath useClasspath="true" />
         <module name="captcha" />
         <module name="email" />
+        <module name="model-service" />
         <module name="persist" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
+    <bytecodeTargetLevel target="1.7">
       <module name="aggregator" target="1.5" />
       <module name="captcha" target="1.7" />
       <module name="email" target="1.7" />
       <module name="model-parent" target="1.5" />
+      <module name="model-service" target="1.5" />
       <module name="persist" target="1.7" />
     </bytecodeTargetLevel>
   </component>

@@ -67,7 +67,7 @@ public class CaptchaController {
 
         // create the text for the image
         String capText = captchaProducer.createText();
-
+        logger.info(capText);
         // store the text in the session
         session.setAttribute(Constants.KAPTCHA_SESSION_KEY, capText);
 

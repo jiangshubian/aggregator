@@ -86,6 +86,145 @@
                         </execution>
                     </executions>
                 </plugin>
+                <!-- jetty热部署插件,使用说明：http://wiki.eclipse.org/Jetty/Feature/Jetty_Maven_Plugin -->
+                <plugin>
+                    <groupId>org.mortbay.jetty</groupId>
+                    <artifactId>jetty-maven-plugin</artifactId>
+                    <version>7.1.6.v20100715</version>
+                    <configuration>
+                        <!-- scanIntervalSeconds默认为0，不启用热部署功能 -->
+                        <scanIntervalSeconds>10</scanIntervalSeconds>
+                        <webAppConfig>
+                            <!-- default contextPath is / -->
+                            <contextPath>/test</contextPath>
+                        </webAppConfig>
+                        <connectors>
+                            <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+                                <port>80</port>
+                                <maxIdleTime>60000</maxIdleTime>
+                            </connector>
+                        </connectors>
+                        <!-- want to use mvn jetty:stop,
+                        you need to configure the plugin with a special port number
+                        and key that you also supply by executing the stop goal,the stopPort and stopKey parameters must be exists. -->
+                        <stopPort>9966</stopPort>
+                        <stopKey>foo</stopKey>
+                    </configuration>
+                </plugin>
+                <!-- Cargo插件，快速自动化部署到Web容器 -->
+                <!-- container标签中：-->
+                <!--standalone: CARGO will create the configuration folder using your properties-->
+                <!--existing: an existing configuration folder, for example that you would have manually generated, will be used-->
+                <!--runtime: not applicable for an embedded container-->
+                <plugin>
+                    <groupId>org.codehaus.cargo</groupId>
+                    <artifactId>cargo-maven2-plugin</artifactId>
+                    <version>1.4.9</version>
+                    <!--
+                     2/部署到本地Web容器
+                     在standalone模式，Cargo会从Web容器的安装目录复制一份配置到用户指定的目录，
+                     然后在此基础上部署应用，每次重新构建的时候，这个目录都会被清空，所有配置被重新生成
+                     cargo.hostname the remote host name or ip address
+                    -->
+                    <!--<configuration>-->
+                        <!--<container>-->
+                            <!--<containerId>tomcat7x</containerId>-->
+                            <!--<home>E:\workspace\richinfo\apache-tomcat\apache-tomcat-7.0.65</home>-->
+                            <!--<log>${project.build.directory}/cargo.log</log>-->
+                            <!--<output>${project.build.directory}/output.log</output>-->
+                        <!--</container>-->
+                        <!--<configuration>-->
+                            <!--<type>standalone</type>-->
+                            <!--<home>${project.build.directory}/tomcat7x</home>-->
+                            <!--<properties>-->
+                                <!--&lt;!&ndash; 更改监听端口 &ndash;&gt;-->
+                                <!--<cargo.servlet.port>80</cargo.servlet.port>-->
+                            <!--</properties>-->
+                        <!--</configuration>-->
+                    <!--</configuration>-->
+                    <!-- 2/在existing模式下，用户需要指定现有的web容器配置目录，
+                    然后Cargo会直接使用这些配置并将应用部署到tomcat的webapps目录的位置
+                     -->
+                    <!--<configuration>-->
+                        <!--<container>-->
+                            <!--<containerId>tomcat7x</containerId>-->
+                            <!--<home>E:\workspace\richinfo\apache-tomcat\apache-tomcat-7.0.65</home>-->
+                            <!--<log>${project.build.directory}/cargo.log</log>-->
+                            <!--<output>${project.build.directory}/output.log</output>-->
+                        <!--</container>-->
+                        <!--<configuration>-->
+                            <!--<type>existing</type>-->
+                            <!--<home>E:\workspace\richinfo\apache-tomcat\apache-tomcat-7.0.65</home>-->
+                        <!--</configuration>-->
+                    <!--</configuration>-->
+
+                    <configuration>
+                        <container>
+                            <containerId>tomcat7x</containerId>
+                            <type>remote</type>
+                            <log>${project.build.directory}/cargo.log</log>
+                            <output>${project.build.directory}/output.log</output>
+                        </container>
+                        <configuration>
+                            <type>runtime</type>
+                            <properties>
+                                <!-- 部署远程时指定 username password -->
+                                <cargo.protocol>http</cargo.protocol>
+                                <cargo.servlet.port>80</cargo.servlet.port>
+                                <cargo.hostname>127.0.0.1</cargo.hostname>
+                                <!--<cargo.hostname>192.168.18.247</cargo.hostname>-->
+                                <cargo.remote.username>deploy</cargo.remote.username>
+                                <cargo.remote.password>deploy</cargo.remote.password>
+                            </properties>
+                        </configuration>
+                        <!--<deployables>-->
+                            <!--<deployable>-->
+                                <!--<groupId>io.steveguoshao</groupId>-->
+                                <!--<artifactId>webapp</artifactId>-->
+                                <!--<type>war</type>-->
+                                <!--<properties>-->
+                                    <!--<context>/${project.artifactId}</context>-->
+                                <!--</properties>-->
+                                <!--&lt;!&ndash; 可选：验证是否部署成功 &ndash;&gt;-->
+                                <!--&lt;!&ndash;<pingURL>http://192.168.18.247:9004/webapp</pingURL>&ndash;&gt;-->
+                                <!--&lt;!&ndash; 可选：验证超时时间，默认是120000 毫秒&ndash;&gt;-->
+                                <!--&lt;!&ndash;<pingTimeout>60000</pingTimeout>&ndash;&gt;-->
+                            <!--</deployable>-->
+                        <!--</deployables>-->
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>verify-deployer</id>
+                            <phase>install</phase>
+                            <goals>
+                                <goal>deployer-redeploy</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>clean-deployer</id>
+                            <phase>clean</phase>
+                            <goals>
+                                <goal>deployer-undeploy</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <!-- tomcat7 -->
+                <plugin>
+                    <groupId>org.apache.tomcat.maven</groupId>
+                    <artifactId>tomcat7-maven-plugin</artifactId>
+                    <version>2.2</version>
+                    <configuration>
+                        <url>http://127.0.0.1/manager</url>
+                        <!--<url>http://192.168.18.247:9004/manager</url>-->
+                        <URIEncoding>UTF-8</URIEncoding>
+                        <server>tomcat7x</server>
+                        <username>deploy</username>
+                        <password>deploy</password>
+                        <path>/${project.artifactId}</path>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
@@ -154,12 +293,23 @@
                 <version>${slf4j.version}</version>
             </dependency>
             <!-- slf4j log end -->
+            <!-- servlet和servlet-api所有web项目的依赖包，非打包时引入 start..-->
             <!-- https://mvnrepository.com/artifact/javax.servlet/servlet-api -->
             <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>servlet-api</artifactId>
                 <version>2.5</version>
+                <scope>provided</scope>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/javax.servlet.jsp/jsp-api -->
+            <dependency>
+                <groupId>javax.servlet.jsp</groupId>
+                <artifactId>jsp-api</artifactId>
+                <version>2.1</version>
+                <scope>provided</scope>
+            </dependency>
+            <!-- servlet和servlet-api非打包时引入 end..-->
+
             <!-- https://mvnrepository.com/artifact/net.sf.json-lib/json-lib
             json-lib自动导入依赖包
             commons-lang-2.5.jar commons-beanutils-1.9.2.jar commons-collections-3.2.1.jar
@@ -171,7 +321,7 @@
                 <version>2.4</version>
                 <classifier>jdk15</classifier>
             </dependency>
-            <!-- 阿里巴巴开源JSON包，不依赖其它jar包 -->
+            <!-- 阿里巴巴开源JSON包，其不依赖其它jar包 -->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>

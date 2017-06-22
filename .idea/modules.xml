@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/captcha/captcha.iml" filepath="$PROJECT_DIR$/captcha/captcha.iml" />
       <module fileurl="file://$PROJECT_DIR$/email/email.iml" filepath="$PROJECT_DIR$/email/email.iml" />
       <module fileurl="file://$PROJECT_DIR$/model-parent/model-parent.iml" filepath="$PROJECT_DIR$/model-parent/model-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/model-service/model-service.iml" filepath="$PROJECT_DIR$/model-service/model-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/persist/persist.iml" filepath="$PROJECT_DIR$/persist/persist.iml" />
     </modules>
   </component>

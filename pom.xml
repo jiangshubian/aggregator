@@ -13,6 +13,7 @@
         <module>email</module>
         <module>model-parent</module>
         <module>captcha</module>
+        <module>model-service</module>
     </modules>
 
     <dependencyManagement>
